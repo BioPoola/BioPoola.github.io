@@ -111,10 +111,13 @@ body {
 h1 { font-size:36px; letter-spacing:3px; }
 .subtitle { opacity:0.6; margin-bottom:22px; }
 
-/* ===== LINKS ===== */
+/* ===== LINKS С ИКОНКАМИ ===== */
 .links { display:flex; flex-direction:column; gap:12px; }
 
 .link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding:12px;
   border:2px solid #fff;
   text-decoration:none;
@@ -137,6 +140,13 @@ h1 { font-size:36px; letter-spacing:3px; }
 .link:hover { color:#000; }
 .link:hover::after { transform:translateX(0); }
 
+.icon {
+  display:inline-block;
+  width:20px;
+  text-align:center;
+  font-size:16px;
+}
+
 /* ===== FOOTER ===== */
 footer { margin-top:18px; font-size:14px; opacity:0.5; }
 </style>
@@ -158,14 +168,14 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
   <div class="subtitle">MY SOCIAL</div>
 
   <div class="links">
-    <a class="link" href="https://t.me/AuraFucked" target="_blank">TELEGRAM</a>
-    <a class="link" href="https://vk.com/ffvvxz" target="_blank">VK</a>
-    <a class="link" href="https://tiktok.com/@poolsidhg" target="_blank">TIKTOK</a>
-    <a class="link" href="https://funpay.com/users/3915967/" target="_blank">FUNPAY</a>
-    <a class="link" href="https://steamcommunity.com/id/G502F/" target="_blank">STEAM</a>
-    <a class="link" href="https://discord.com/users/641803809382989865/" target="_blank">DISCORD</a>
-    <a class="link" href="https://open.spotify.com/playlist/23IqIDdLAr8gHzSfXfKDxS" target="_blank">PLAYLIST</a>
-    <a class="link" href="mailto:poola.impact@gmail.com">MAIL</a>
+    <a class="link" href="https://t.me/AuraFucked" target="_blank"><span class="icon">📩</span> TELEGRAM</a>
+    <a class="link" href="https://vk.com/ffvvxz" target="_blank"><span class="icon">🖼️</span> VK</a>
+    <a class="link" href="https://tiktok.com/@poolsidhg" target="_blank"><span class="icon">🎵</span> TIKTOK</a>
+    <a class="link" href="https://funpay.com/users/3915967/" target="_blank"><span class="icon">💰</span> FUNPAY</a>
+    <a class="link" href="https://steamcommunity.com/id/G502F/" target="_blank"><span class="icon">🎮</span> STEAM</a>
+    <a class="link" href="https://discord.com/users/641803809382989865/" target="_blank"><span class="icon">💬</span> DISCORD</a>
+    <a class="link" href="https://open.spotify.com/playlist/23IqIDdLAr8gHzSfXfKDxS" target="_blank"><span class="icon">🎧</span> PLAYLIST</a>
+    <a class="link" href="mailto:poola.impact@gmail.com"><span class="icon">✉️</span> MAIL</a>
   </div>
 
   <footer>© 2025 POOLA</footer>
