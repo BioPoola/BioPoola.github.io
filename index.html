@@ -5,14 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poola / BIO</title>
 
-<!-- Pixel Font -->
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #000;
   --fg: #fff;
-  --border: #fff;
 }
 
 * {
@@ -23,86 +20,133 @@
 
 body {
   font-family: 'VT323', monospace;
-  background: var(--bg);
-  color: var(--fg);
   min-height: 100vh;
+  color: var(--fg);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* Animated pixel noise background */
-body::before {
+/* ===== BACKGROUND IMAGE ===== */
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url("background.png") center / cover no-repeat;
+  filter: contrast(1.1);
+  z-index: -2;
+}
+
+.bg::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,0.03),
-      rgba(255,255,255,0.03) 1px,
-      transparent 1px,
-      transparent 3px
-    );
+  background: rgba(0,0,0,0.6);
+}
+
+/* ===== SCANLINE ANIMATION ===== */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.04),
+    rgba(255,255,255,0.04) 1px,
+    transparent 1px,
+    transparent 3px
+  );
   animation: scan 6s linear infinite;
   pointer-events: none;
+  z-index: -1;
 }
 
 @keyframes scan {
   from { background-position: 0 0; }
-  to { background-position: 0 100px; }
+  to { background-position: 0 120px; }
 }
 
+/* ===== CARD ===== */
 .card {
-  position: relative;
-  z-index: 1;
   width: 90%;
   max-width: 360px;
-  padding: 24px;
-  border: 2px solid var(--border);
-  background: #000;
+  padding: 26px;
+  background: rgba(0,0,0,0.65);
+  border: 2px solid #fff;
+  backdrop-filter: blur(6px);
   text-align: center;
+  animation: float 6s ease-in-out infinite;
 }
 
-/* Pixel avatar */
+/* breathing */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ===== AVATAR ===== */
 .avatar {
   width: 96px;
   height: 96px;
-  border: 2px solid var(--border);
-  margin-bottom: 12px;
+  border: 2px solid #fff;
+  margin-bottom: 14px;
   image-rendering: pixelated;
+  animation: glitch 4s infinite;
 }
 
+@keyframes glitch {
+  0%, 100% { transform: none; }
+  92% { transform: translateX(0); }
+  94% { transform: translateX(-2px); }
+  96% { transform: translateX(2px); }
+}
+
+/* ===== TEXT ===== */
 h1 {
   font-size: 36px;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .subtitle {
   opacity: 0.6;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
+/* ===== LINKS ===== */
 .links {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .link {
   padding: 12px;
-  border: 2px solid var(--border);
+  border: 2px solid #fff;
   text-decoration: none;
-  color: var(--fg);
+  color: #fff;
   transition: all .15s steps(2);
+  position: relative;
+  overflow: hidden;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: translateX(-100%);
+  transition: transform .15s steps(2);
+  z-index: -1;
 }
 
 .link:hover {
-  background: var(--fg);
-  color: var(--bg);
+  color: #000;
 }
 
+.link:hover::after {
+  transform: translateX(0);
+}
+
+/* ===== FOOTER ===== */
 footer {
   margin-top: 18px;
   font-size: 14px;
@@ -112,6 +156,9 @@ footer {
 </head>
 
 <body>
+
+<div class="bg"></div>
+<div class="scanlines"></div>
 
 <div class="card">
   <img class="avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
