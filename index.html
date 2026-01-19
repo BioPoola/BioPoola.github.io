@@ -34,20 +34,22 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+ @media (min-width: 768px) {
   body {
-  animation: bgZoom 40s ease-in-out infinite;
+    animation: bgZoom 40s ease-in-out infinite;
+  }
 }
 
+}
 @keyframes bgZoom {
   0%, 100% {
-    background-size: 100%;
+    background-size: cover;
   }
   50% {
     background-size: 110%;
   }
 }
-
-
+  
 /* ===== SCANLINE ANIMATION ===== */
 .scanlines {
   position: fixed;
