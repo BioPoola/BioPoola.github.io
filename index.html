@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Poola / BIO</title>
-
+<title>Poola | BIO</title>
+  
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
 <style>
@@ -34,8 +34,7 @@ body {
   0%,100%{ background-size: cover; }
   50%{ background-size: 110%; }
 }
-
-/* ===== SCANLINE ANIMATION ===== */
+  
 .scanlines {
   position: fixed;
   inset:0;
@@ -52,7 +51,6 @@ body {
   to { background-position: 0 120px; }
 }
 
-/* ===== CARD ===== */
 .card {
   width: 90%;
   max-width:360px;
@@ -66,7 +64,6 @@ body {
 
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
 
-/* ===== AVATAR ROW ===== */
 .avatar-row {
   display: flex;
   align-items: center;
@@ -82,7 +79,6 @@ body {
   text-align: center;
 }
 
-/* ===== WEATHER ===== */
 .weather-row {
   display: flex;
   justify-content: space-between;
@@ -92,7 +88,6 @@ body {
 }
 .weather-info { width: 45%; text-align: center; }
 
-/* ===== AVATAR С ТВ СНЕГОМ ===== */
 .avatar-container {
   width:96px;
   height:96px;
@@ -108,7 +103,6 @@ body {
   image-rendering: pixelated;
 }
 
-/* ТВ шум поверх аватарки */
 .tv-noise {
   position: absolute;
   inset: 0;
@@ -132,13 +126,11 @@ body {
   100% { transform: translate(0,0); opacity: 0.3; }
 }
 
-/* ===== TEXT ===== */
 h1 { font-size:36px; letter-spacing:3px; }
 .subtitle { opacity:0.6; margin-bottom:22px; }
-
-/* ===== LINKS С ИКОНКАМИ ===== */
+  
 .links { display:flex; flex-direction:column; gap:12px; }
-
+  
 .link {
   display: flex;
   align-items: center;
@@ -172,7 +164,6 @@ h1 { font-size:36px; letter-spacing:3px; }
   font-size:16px;
 }
 
-/* ===== FOOTER ===== */
 footer { margin-top:18px; font-size:14px; opacity:0.5; }
 </style>
 </head>
@@ -183,7 +174,7 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
 <div class="scanlines"></div>
 
 <div class="card">
-  <!-- Часы + аватарка + погода -->
+  
   <div class="avatar-row">
     <div class="timezone" id="moscow-time">MSK: --:--:--</div>
 
@@ -192,13 +183,12 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
       <div class="tv-noise"></div>
     </div>
 
-    <div class="timezone" id="sakhalin-time">VLAT: --:--:--</div>
+    <div class="timezone" id="sakhalin-time">SAKH: --:--:--</div>
   </div>
 
-  <!-- Погода -->
   <div class="weather-row">
     <div class="weather-info" id="moscow-weather">MSK 🌤️ --°</div>
-    <div class="weather-info" id="sakhalin-weather">VLAT 🌫️ --°</div>
+    <div class="weather-info" id="sakhalin-weather">SAKH 🌫️ --°</div>
   </div>
 
   <h1>POOLA</h1>
@@ -215,11 +205,11 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
     <a class="link" href="mailto:poola.impact@gmail.com"><span class="icon">✉️</span> MAIL</a>
   </div>
 
-  <footer>© 2025 POOLA</footer>
+  <footer>© 2025-2026 GEN BY POOLA</footer>
 </div>
 
 <script>
-// ===== ЧАСЫ =====
+  
 function updateClocks() {
   const now = new Date();
 
@@ -229,14 +219,13 @@ function updateClocks() {
 
   const sakhalin = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Sakhalin" }));
   const sakhalinTime = sakhalin.toTimeString().slice(0,8);
-  document.getElementById("sakhalin-time").textContent = "VLAT: " + sakhalinTime;
+  document.getElementById("sakhalin-time").textContent = "SAKH: " + sakhalinTime;
 }
 setInterval(updateClocks, 1000);
 updateClocks();
 
-// ===== ПОГОДА =====
 async function fetchWeather(lat, lon, elementId) {
-  const apiKey = "3c73ec5c4c5055924566e3278fd2d6c1"; // вставь свой ключ
+  const apiKey = "3c73ec5c4c5055924566e3278fd2d6c1"; 
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=ru&appid=${apiKey}`;
   try {
     const response = await fetch(url);
@@ -247,7 +236,7 @@ async function fetchWeather(lat, lon, elementId) {
     const weatherEmoji = getWeatherEmoji(weatherId);
 
     document.getElementById(elementId).textContent =
-      `${elementId === "moscow-weather" ? "MSK" : "VLAT"} ${weatherEmoji} ${temp}°`;
+      `${elementId === "moscow-weather" ? "MSK" : "SAKH"} ${weatherEmoji} ${temp}°`;
   } catch (err) {
     console.error("Ошибка погоды:", err);
   }
@@ -272,7 +261,7 @@ async function updateWeather() {
   await fetchWeather(sakhalinCoords.lat, sakhalinCoords.lon, "sakhalin-weather");
 }
 updateWeather();
-setInterval(updateWeather, 600000); // каждые 10 минут
+setInterval(updateWeather, 600000);
 </script>
 
 </body>
