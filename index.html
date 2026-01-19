@@ -236,7 +236,7 @@ updateClocks();
 
 // ===== ПОГОДА =====
 async function fetchWeather(lat, lon, elementId) {
-  const apiKey = "YOUR_OPENWEATHERMAP_API_KEY"; // вставь свой ключ
+  const apiKey = "3c73ec5c4c5055924566e3278fd2d6c1"; // вставь свой ключ
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=ru&appid=${apiKey}`;
   try {
     const response = await fetch(url);
