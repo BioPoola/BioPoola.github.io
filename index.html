@@ -12,11 +12,9 @@
   --fg: #fff;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ===== БАЗОВЫЕ СТИЛИ ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+
 body {
   font-family: 'VT323', monospace;
   min-height: 100vh;
@@ -25,32 +23,24 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-body {
   background-image: url("/background.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-@media (max-width: 767px) {
+
+@media (min-width: 768px) {
   body {
-    background-position: center top;
-    background-size: 105%;
+    animation: bgZoom 40s ease-in-out infinite;
   }
 }
 
-}
 @keyframes bgZoom {
-  0%, 100% {
-    background-size: cover;
-  }
-  50% {
-    background-size: 110%;
-  }
+  0%,100% { background-size: cover; }
+  50% { background-size: 110%; }
 }
-  
+
 /* ===== SCANLINE ANIMATION ===== */
 .scanlines {
   position: fixed;
@@ -70,6 +60,31 @@ body {
 @keyframes scan {
   from { background-position: 0 0; }
   to { background-position: 0 120px; }
+}
+
+/* ===== ИНТРО ===== */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.fade-in.delay-1 { animation-delay: 0.5s; }
+.fade-in.delay-2 { animation-delay: 1.5s; }
+.fade-in.delay-3 { animation-delay: 2.5s; }
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 /* ===== CARD ===== */
@@ -111,15 +126,6 @@ body {
 h1 {
   font-size: 36px;
   letter-spacing: 3px;
-}
-
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  92% { opacity: 1; }
-  93% { opacity: 0.3; }
-  94% { opacity: 1; }
-}
-
 }
 
 .subtitle {
@@ -170,19 +176,22 @@ footer {
 }
 </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
-<div class="scanlines"></div>
+<!-- ИНТРО -->
+<div id="intro">
+  <!-- Фон интро -->
+  <div class="fade-in delay-1" style="position:absolute; inset:0; background:#111;"></div>
 
-<div class="card">
-  <img class="avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
+  <!-- Визитка -->
+  <div class="card fade-in delay-2">
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
+    <h1>POOLA</h1>
+    <div class="subtitle">MY SOCIAL</div>
+  </div>
 
-  <h1>POOLA</h1>
-  <div class="subtitle">MY SOCIAL</div>
-
-  <div class="links">
+  <!-- Кнопки -->
+  <div class="links fade-in delay-3" style="margin-top: 20px;">
     <a class="link" href="https://t.me/AuraFucked" target="_blank">TELEGRAM</a>
     <a class="link" href="https://vk.com/ffvvxz" target="_blank">VK</a>
     <a class="link" href="https://tiktok.com/@poolsidhg" target="_blank">TIKTOK</a>
@@ -192,9 +201,17 @@ footer {
     <a class="link" href="https://open.spotify.com/playlist/23IqIDdLAr8gHzSfXfKDxS" target="_blank">PLAYLIST</a>
     <a class="link" href="mailto:poola.impact@gmail.com">MAIL</a>
   </div>
-
-  <footer>© 2025 POOLA</footer>
 </div>
+
+<!-- SCANLINES -->
+<div class="scanlines"></div>
+
+<script>
+  // Скрыть интро через 4 секунды
+  setTimeout(() => {
+    document.getElementById('intro').style.display = 'none';
+  }, 4000);
+</script>
 
 </body>
 </html>
