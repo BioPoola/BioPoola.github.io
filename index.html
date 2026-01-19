@@ -8,15 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --fg: #fff;
-}
+:root { --fg: #fff; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 body {
   font-family: 'VT323', monospace;
   min-height: 100vh;
@@ -31,32 +25,23 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-@media (min-width: 768px) {
-  body {
-    animation: bgZoom 40s ease-in-out infinite;
-  }
+
+@media (min-width: 768px){
+  body { animation: bgZoom 40s ease-in-out infinite; }
 }
 
 @keyframes bgZoom {
-  0%, 100% {
-    background-size: cover;
-  }
-  50% {
-    background-size: 110%;
-  }
+  0%,100%{ background-size: cover; }
+  50%{ background-size: 110%; }
 }
-  
+
 /* ===== SCANLINE ANIMATION ===== */
 .scanlines {
   position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.04),
-    rgba(255,255,255,0.04) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  inset:0;
+  background: repeating-linear-gradient(to bottom,
+    rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px,
+    transparent 1px, transparent 3px);
   animation: scan 6s linear infinite;
   pointer-events: none;
   z-index: -1;
@@ -70,99 +55,91 @@ body {
 /* ===== CARD ===== */
 .card {
   width: 90%;
-  max-width: 360px;
-  padding: 26px;
+  max-width:360px;
+  padding:26px;
   background: rgba(0,0,0,0.65);
-  border: 2px solid #fff;
-  backdrop-filter: blur(6px);
-  text-align: center;
+  border:2px solid #fff;
+  backdrop-filter:blur(6px);
+  text-align:center;
   animation: float 6s ease-in-out infinite;
 }
 
-/* breathing */
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
 
-/* ===== AVATAR ===== */
-.avatar {
-  width: 96px;
-  height: 96px;
-  border: 2px solid #fff;
-  margin-bottom: 14px;
-  image-rendering: pixelated;
-
-  /* ===== ГЛИТЧ ЭФФЕКТ ===== */
+/* ===== AVATAR CRT ГЛИТЧ ===== */
+.avatar-container {
+  width:96px;
+  height:96px;
   position: relative;
-  animation: glitch 2s infinite;
+  margin:0 auto 14px auto;
 }
 
-@keyframes glitch {
-  0%, 100% { transform: none; }
-  10% { transform: translate(-2px, -2px) rotate(-1deg); }
-  20% { transform: translate(2px, 1px) rotate(1deg); }
-  30% { transform: translate(-1px, 2px) rotate(0deg); }
-  40% { transform: translate(1px, -1px) rotate(1deg); }
-  50% { transform: translate(-2px, 0px) rotate(-1deg); }
-  60% { transform: translate(2px, 2px) rotate(0deg); }
-  70% { transform: translate(0px, -2px) rotate(1deg); }
-  80% { transform: translate(-1px, 1px) rotate(-1deg); }
-  90% { transform: translate(1px, -1px) rotate(0deg); }
+.avatar-container img.main-avatar {
+  width:100%;
+  height:100%;
+  display:block;
+  image-rendering: pixelated;
+  border:2px solid #fff;
+}
+
+.avatar-container img.glitch {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  image-rendering: pixelated;
+  border:none;
+  opacity:0.8;
+  mix-blend-mode: difference;
+  animation: glitch-tv 1.5s infinite;
+}
+
+@keyframes glitch-tv {
+  0%,100% { clip-path: inset(0% 0% 0% 0%); transform: translate(0,0); }
+  10% { clip-path: inset(10% 0 85% 0); transform: translate(-2px,-2px); }
+  20% { clip-path: inset(20% 0 70% 0); transform: translate(2px,1px); }
+  30% { clip-path: inset(0 0 30% 0); transform: translate(-1px,2px); }
+  40% { clip-path: inset(25% 0 60% 0); transform: translate(1px,-1px); }
+  50% { clip-path: inset(40% 0 40% 0); transform: translate(-2px,0); }
+  60% { clip-path: inset(10% 0 70% 0); transform: translate(2px,2px); }
+  70% { clip-path: inset(0 0 30% 0); transform: translate(0,-2px); }
+  80% { clip-path: inset(30% 0 40% 0); transform: translate(-1px,1px); }
+  90% { clip-path: inset(20% 0 60% 0); transform: translate(1px,-1px); }
 }
 
 /* ===== TEXT ===== */
-h1 {
-  font-size: 36px;
-  letter-spacing: 3px;
-}
-
-.subtitle {
-  opacity: 0.6;
-  margin-bottom: 22px;
-}
+h1 { font-size:36px; letter-spacing:3px; }
+.subtitle { opacity:0.6; margin-bottom:22px; }
 
 /* ===== LINKS ===== */
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+.links { display:flex; flex-direction:column; gap:12px; }
 
 .link {
-  padding: 12px;
-  border: 2px solid #fff;
-  text-decoration: none;
-  color: #fff;
+  padding:12px;
+  border:2px solid #fff;
+  text-decoration:none;
+  color:#fff;
   transition: all .15s steps(2);
-  position: relative;
-  overflow: hidden;
+  position:relative;
+  overflow:hidden;
 }
 
 .link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #fff;
-  transform: translateX(-100%);
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#fff;
+  transform:translateX(-100%);
   transition: transform .15s steps(2);
-  z-index: -1;
+  z-index:-1;
 }
 
-.link:hover {
-  color: #000;
-}
-
-.link:hover::after {
-  transform: translateX(0);
-}
+.link:hover { color:#000; }
+.link:hover::after { transform:translateX(0); }
 
 /* ===== FOOTER ===== */
-footer {
-  margin-top: 18px;
-  font-size: 14px;
-  opacity: 0.5;
-}
+footer { margin-top:18px; font-size:14px; opacity:0.5; }
 </style>
 </head>
 
@@ -172,7 +149,11 @@ footer {
 <div class="scanlines"></div>
 
 <div class="card">
-  <img class="avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
+  <!-- Аватарка с CRT глитч -->
+  <div class="avatar-container">
+    <img class="main-avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
+    <img class="glitch" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="">
+  </div>
 
   <h1>POOLA</h1>
   <div class="subtitle">MY SOCIAL</div>
