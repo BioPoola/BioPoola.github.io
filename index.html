@@ -17,6 +17,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+<script>
+const card = document.querySelector('.card');
+
+document.addEventListener('mousemove', e => {
+  const x = (window.innerWidth / 2 - e.clientX) / 25;
+  const y = (window.innerHeight / 2 - e.clientY) / 25;
+  card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
+</script>
 
 body {
   font-family: 'VT323', monospace;
@@ -35,6 +44,19 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+  body {
+  animation: bgZoom 40s ease-in-out infinite;
+}
+
+@keyframes bgZoom {
+  0%, 100% {
+    background-size: 100%;
+  }
+  50% {
+    background-size: 110%;
+  }
+}
+
 
 /* ===== SCANLINE ANIMATION ===== */
 .scanlines {
@@ -94,8 +116,16 @@ body {
 
 /* ===== TEXT ===== */
 h1 {
-  font-size: 36px;
-  letter-spacing: 3px;
+  animation: flicker 6s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.3; }
+  94% { opacity: 1; }
+}
+
 }
 
 .subtitle {
