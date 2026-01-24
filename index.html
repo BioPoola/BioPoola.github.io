@@ -66,12 +66,12 @@ body {
 @keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
 
 .avatar-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 80px auto 80px;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
   margin-bottom: 6px;
 }
+
 
 .timezone {
   font-size: 14px;
@@ -79,15 +79,18 @@ body {
   width: 80px;
   text-align: center;
 }
-
+  
 .weather-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 80px auto 80px;
   margin-bottom: 14px;
   font-size: 14px;
   opacity: 0.8;
 }
-.weather-info { width: 45%; text-align: center; }
+
+.weather-info {
+  text-align: center;
+}
 
 .avatar-container {
   width:96px;
@@ -202,10 +205,12 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
     <div class="timezone" id="sakhalin-time">SAKH: --:--:--</div>
   </div>
 
-  <div class="weather-row">
-    <div class="weather-info" id="moscow-weather">MSK 🌤️ --°</div>
-    <div class="weather-info" id="sakhalin-weather">SAKH 🌫️ --°</div>
-  </div>
+<div class="weather-row">
+  <div class="weather-info" id="moscow-weather">MSK  --°</div>
+  <div></div>
+  <div class="weather-info" id="sakhalin-weather">SAKH  --°</div>
+</div>
+
 
   <h1>POOLA</h1>
   <div class="subtitle">MY SOCIAL</div>
