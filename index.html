@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poola | BIO</title>
+  
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
 <style>
 :root { --fg: #fff; }
@@ -26,6 +28,31 @@ body {
   background-attachment: fixed;
 }
 
+@media (min-width: 768px){
+  body { animation: bgZoom 40s ease-in-out infinite; }
+}
+
+@keyframes bgZoom {
+  0%,100%{ background-size: cover; }
+  50%{ background-size: 110%; }
+}
+  
+.scanlines {
+  position: fixed;
+  inset:0;
+  background: repeating-linear-gradient(to bottom,
+    rgba(255,255,255,0.04), rgba(255,255,255,0.04) 1px,
+    transparent 1px, transparent 3px);
+  animation: scan 6s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 120px; }
+}
+
 .card {
   width: 90%;
   max-width:360px;
@@ -34,7 +61,10 @@ body {
   border:2px solid #fff;
   backdrop-filter:blur(6px);
   text-align:center;
+  animation: float 6s ease-in-out infinite;
 }
+
+@keyframes float { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
 
 .avatar-row {
   display: grid;
@@ -42,18 +72,24 @@ body {
   align-items: center;
   margin-bottom: 6px;
 }
-
-.timezone { font-size: 14px; opacity: 0.7; text-align:center; }
+.timezone {
+  font-size: 14px;
+  opacity: 0.7;
+  width: 80px;
+  text-align: center;
+}
 
 .weather-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 6px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font-size: 14px;
-  opacity: 0.85;
+  opacity: 0.8;
 }
-.weather-info { text-align:center; }
+
+.weather-info {
+  text-align: center;
+}
 
 .avatar-container {
   width:96px;
@@ -70,11 +106,37 @@ body {
   image-rendering: pixelated;
 }
 
-.links { display:flex; flex-direction:column; gap:12px; }
+.tv-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255,255,255,0.2),
+    rgba(255,255,255,0.2) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  mix-blend-mode: lighten;
+  animation: tv-static 0.08s steps(2) infinite;
+}
 
+@keyframes tv-static {
+  0% { transform: translate(0,0); opacity: 0.3; }
+  25% { transform: translate(-1px, 1px); opacity: 0.5; }
+  50% { transform: translate(1px, -1px); opacity: 0.2; }
+  75% { transform: translate(-1px, -1px); opacity: 0.4; }
+  100% { transform: translate(0,0); opacity: 0.3; }
+}
+
+h1 { font-size:36px; letter-spacing:3px; }
+.subtitle { opacity:0.6; margin-bottom:22px; }
+  
+.links { display:flex; flex-direction:column; gap:12px; }
+  
 .link {
   display: flex;
-  align-items: center;
+  align-items: center; /* центр по вертикали */
   gap: 10px;
   padding:12px;
   border:2px solid #fff;
@@ -83,18 +145,6 @@ body {
   transition: all .15s steps(2);
   position:relative;
   overflow:hidden;
-}
-
-.link i {
-  width:20px;
-  text-align:center;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0%{transform:scale(1);opacity:0.7}
-  50%{transform:scale(1.2);opacity:1}
-  100%{transform:scale(1);opacity:0.7}
 }
 
 .link::after {
@@ -110,11 +160,26 @@ body {
 .link:hover { color:#000; }
 .link:hover::after { transform:translateX(0); }
 
+.icon {
+  width:20px;
+  text-align:center;
+  animation: pulse 1.6s infinite;
+}
+  
+@keyframes pulse {
+  0%   { transform: scale(1);   opacity: .7; }
+  50%  { transform: scale(1.25); opacity: 1; }
+  100% { transform: scale(1);   opacity: .7; }
+}
+
 footer { margin-top:18px; font-size:14px; opacity:0.5; }
 </style>
 </head>
 
 <body>
+
+<div class="bg"></div>
+<div class="scanlines"></div>
 
 <div class="card">
   
@@ -123,42 +188,69 @@ footer { margin-top:18px; font-size:14px; opacity:0.5; }
 
     <div class="avatar-container">
       <img class="main-avatar" src="https://avatars.githubusercontent.com/u/251814576?s=400" alt="avatar">
+      <div class="tv-noise"></div>
     </div>
 
     <div class="timezone" id="sakhalin-time">SAKH: --:--:--</div>
   </div>
 
   <div class="weather-row">
-    <div class="weather-info" id="moscow-weather">MSK --°</div>
-    <div class="weather-info" id="sakhalin-weather">SAKH --°</div>
+    <div class="weather-info" id="moscow-weather">MSK 🌤️ --°</div>
+    <div class="weather-info" id="sakhalin-weather">SAKH 🌫️ --°</div>
   </div>
 
   <h1>POOLA</h1>
   <div class="subtitle">MY SOCIAL</div>
+  
+    <div class="links">
+<a class="link" href="https://t.me/AuraFucked" target="_blank">
+  <span class="icon"><i class="fa-brands fa-telegram"></i></span> TELEGRAM
+</a>
 
-  <div class="links">
-    <a class="link" href="https://t.me/AuraFucked" target="_blank"><i class="fa-brands fa-telegram"></i> TELEGRAM</a>
-    <a class="link" href="https://vk.com/ffvvxz" target="_blank"><i class="fa-brands fa-vk"></i> VK</a>
-    <a class="link" href="https://tiktok.com/@poolsidhg" target="_blank"><i class="fa-brands fa-tiktok"></i> TIKTOK</a>
-    <a class="link" href="https://funpay.com/users/3915967/" target="_blank"><i class="fa-solid fa-coins"></i> FUNPAY</a>
-    <a class="link" href="https://steamcommunity.com/id/G502F/" target="_blank"><i class="fa-brands fa-steam"></i> STEAM</a>
-    <a class="link" href="https://discord.com/users/641803809382989865/" target="_blank"><i class="fa-brands fa-discord"></i> DISCORD</a>
-    <a class="link" href="https://open.spotify.com/playlist/23IqIDdLAr8gHzSfXfKDxS" target="_blank"><i class="fa-brands fa-spotify"></i> PLAYLIST</a>
-    <a class="link" href="mailto:poola.impact@gmail.com"><i class="fa-solid fa-envelope"></i> MAIL</a>
+<a class="link" href="https://vk.com/ffvvxz" target="_blank">
+  <span class="icon"><i class="fa-brands fa-vk"></i></span> VK
+</a>
+
+<a class="link" href="https://tiktok.com/@poolsidhg" target="_blank">
+  <span class="icon"><i class="fa-brands fa-tiktok"></i></span> TIKTOK
+</a>
+
+<a class="link" href="https://funpay.com/users/3915967/" target="_blank">
+  <span class="icon"><i class="fa-solid fa-coins"></i></span> FUNPAY
+</a>
+
+<a class="link" href="https://steamcommunity.com/id/G502F/" target="_blank">
+  <span class="icon"><i class="fa-brands fa-steam"></i></span> STEAM
+</a>
+
+<a class="link" href="https://discord.com/users/641803809382989865/" target="_blank">
+  <span class="icon"><i class="fa-brands fa-discord"></i></span> DISCORD
+</a>
+
+<a class="link" href="https://open.spotify.com/playlist/23IqIDdLAr8gHzSfXfKDxS" target="_blank">
+  <span class="icon"><i class="fa-brands fa-spotify"></i></span> PLAYLIST
+</a>
+
+<a class="link" href="mailto:poola.impact@gmail.com">
+  <span class="icon"><i class="fa-solid fa-envelope"></i></span> MAIL
+</a>
   </div>
-
+        
   <footer>© 2025-2026 GEN BY POOLA</footer>
 </div>
 
 <script>
+  
 function updateClocks() {
   const now = new Date();
 
   const moscow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Moscow" }));
-  document.getElementById("moscow-time").textContent = "MSK: " + moscow.toTimeString().slice(0,8);
+  const moscowTime = moscow.toTimeString().slice(0,8);
+  document.getElementById("moscow-time").textContent = "MSK: " + moscowTime;
 
   const sakhalin = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Sakhalin" }));
-  document.getElementById("sakhalin-time").textContent = "SAKH: " + sakhalin.toTimeString().slice(0,8);
+  const sakhalinTime = sakhalin.toTimeString().slice(0,8);
+  document.getElementById("sakhalin-time").textContent = "SAKH: " + sakhalinTime;
 }
 setInterval(updateClocks, 1000);
 updateClocks();
@@ -169,9 +261,27 @@ async function fetchWeather(lat, lon, elementId) {
   try {
     const response = await fetch(url);
     const data = await response.json();
+
     const temp = Math.round(data.main.temp);
-    document.getElementById(elementId).textContent = `${elementId === "moscow-weather" ? "MSK" : "SAKH"} ${temp}°`;
-  } catch (err) { console.error("Ошибка погоды:", err); }
+    const weatherId = data.weather[0].id;
+    const weatherEmoji = getWeatherEmoji(weatherId);
+
+    document.getElementById(elementId).textContent =
+      `${elementId === "moscow-weather" ? "MSK" : "SAKH"} ${weatherEmoji} ${temp}°`;
+  } catch (err) {
+    console.error("Ошибка погоды:", err);
+  }
+}
+
+function getWeatherEmoji(id) {
+  if (id >= 200 && id < 300) return "⛈️";
+  if (id >= 300 && id < 600) return "🌧️";
+  if (id >= 600 && id < 700) return "❄️";
+  if (id >= 700 && id < 800) return "🌫️";
+  if (id === 800) return "☀️";
+  if (id === 801) return "🌤️";
+  if (id <= 804) return "☁️";
+  return "🌈";
 }
 
 const moscowCoords = { lat: 55.7558, lon: 37.6173 };
